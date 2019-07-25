@@ -19,9 +19,11 @@ func backupHandler(w http.ResponseWriter, req *http.Request) {
 		var took = time.Now().Sub(start).String()
 		_, err := io.WriteString(w, "CREATED, TOOK "+took)
 		must(err)
+		log.Printf("Scenario %s created\n", name)
 	} else {
 		_, err := io.WriteString(w, "EXISTS")
 		must(err)
+		log.Printf("Scenario %s already exists\n", name)
 	}
 }
 
@@ -36,9 +38,11 @@ func restoreHandler(w http.ResponseWriter, req *http.Request) {
 		var took = time.Now().Sub(start).String()
 		_, err := io.WriteString(w, "RESTORED, TOOK "+took)
 		must(err)
+		log.Printf("Scenario %s loaded\n", name)
 	} else {
 		_, err := io.WriteString(w, "NOT FOUND")
 		must(err)
+		log.Printf("Scenario %s not found\n", name)
 	}
 }
 
@@ -48,6 +52,8 @@ func clearHandler(w http.ResponseWriter, req *http.Request) {
 
 	var _, err = io.WriteString(w, "OK\n")
 	must(err)
+
+	log.Println("Scenarios cleared")
 }
 
 func server() {

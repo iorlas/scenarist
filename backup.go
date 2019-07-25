@@ -50,16 +50,15 @@ func backup(name string) (bool, error) {
 	_, err = stdin.Write([]byte(viper.GetString("password") + "\n"))
 	must(err)
 
-	if waitErr := cmd.Wait(); waitErr != nil {
-		output, err := ioutil.ReadAll(stdout)
-		must(err)
-		println(string(output))
+	output, err := ioutil.ReadAll(stdout)
+	must(err)
+	output, err = ioutil.ReadAll(stderr)
+	must(err)
 
-		output, err = ioutil.ReadAll(stderr)
-		must(err)
+	if err := cmd.Wait(); err != nil {
 		println(string(output))
-
-		panic(waitErr)
+		println(string(output))
+		panic(err)
 	}
 
 	must(preprocess(path))
