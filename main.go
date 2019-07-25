@@ -11,6 +11,7 @@ func main() {
 	viper.SetDefault("port", "5432")
 	viper.SetDefault("user", "postgres")
 	viper.SetDefault("schema", "public")
+	viper.SetDefault("datapath", "data/scenarios")
 
 	log.Println("Starting...")
 	server()

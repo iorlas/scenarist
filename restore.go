@@ -11,7 +11,7 @@ import (
 const CmdPSQL = "psql"
 
 func restore(name string) (bool, error) {
-	var path = fmt.Sprintf("scenarios/%s.sql", name)
+	var path = fmt.Sprintf("%s/%s.sql", viper.GetString("datapath"), name)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false, nil

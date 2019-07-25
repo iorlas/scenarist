@@ -11,11 +11,11 @@ import (
 const CmdPGDUMP = "pg_dump"
 
 func backup(name string) (bool, error) {
-	if _, err := os.Stat("scenarios"); os.IsNotExist(err) {
-		must(os.Mkdir("scenarios", os.ModePerm))
+	if _, err := os.Stat(viper.GetString("datapath")); os.IsNotExist(err) {
+		must(os.Mkdir(viper.GetString("datapath"), os.ModePerm))
 	}
 
-	var path = fmt.Sprintf("scenarios/%s.sql", name)
+	var path = fmt.Sprintf("%s/%s.sql", viper.GetString("datapath"), name)
 
 	if _, err := os.Stat(path); !os.IsNotExist(err) {
 		return false, nil

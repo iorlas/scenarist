@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/spf13/viper"
 	"io"
 	"log"
 	"net/http"
@@ -47,8 +48,8 @@ func restoreHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func clearHandler(w http.ResponseWriter, req *http.Request) {
-	must(os.RemoveAll("scenarios"))
-	must(os.Mkdir("scenarios", os.ModePerm))
+	must(os.RemoveAll(viper.GetString("datapath")))
+	must(os.Mkdir(viper.GetString("datapath"), os.ModePerm))
 
 	var _, err = io.WriteString(w, "OK\n")
 	must(err)
